@@ -407,3 +407,8 @@ f7efdf7560ed        oraclelinux:8.4     "ping google.com"   40 minutes ago      
   111  docker rm    $(docker  ps  -qa)  
 ```
 
+## image build 
+
+<img src="build.png">
+
+
