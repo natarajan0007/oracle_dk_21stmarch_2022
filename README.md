@@ -1,1 +1,4 @@
-# oracle_dk_21stmarch_2022
+# Plan 
+
+<img src="plan.png">
+
