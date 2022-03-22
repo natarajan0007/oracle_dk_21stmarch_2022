@@ -215,3 +215,36 @@ exit
 [ashu@docker-engine-new java_app]$ docker  logout  phx.ocir.io 
 ```
 
+### container to image 
+
+```
+[ashu@docker-engine-new java_app]$ docker  run -it  --name ashucc22  centos:centos7  bash   
+Unable to find image 'centos:centos7' locally
+Trying to pull repository docker.io/library/centos ... 
+centos7: Pulling from docker.io/library/centos
+2d473b07cdd5: Pull complete 
+Digest: sha256:c73f515d06b0fa07bb18d8202035e739a494ce760aa73129f60f4bf2bd22b407
+Status: Downloaded newer image for centos:centos7
+[root@170a8ed67c97 /]# 
+[root@170a8ed67c97 /]# 
+[root@170a8ed67c97 /]# yum install vim  httpd  -y
+Loaded plugins: fastestmirror, ovl
+Determining fastest mirrors
+ * base: mirror.vacares.com
+ * extras: centos-distro.cavecreek.net
+ * updates: mirror.keystealth.org
+base                                                                                                                  | 3.6 kB  00:00:00     
+extras                                                                                                                | 2.9 kB  00:00:00     
+updates                                                                                                               | 2.9 kB  00:00:00     
+(1/4): extras/7/x86_64/pri
+
+==
+
+[ashu@docker-engine-new java_app]$ docker  commit  ashucc22  ashucmig:v007  
+sha256:1cba1484fcf7dcbdc2513de72618df6e62360c1e9df84873456cd4fe8b08d508
+[ashu@docker-engine-new java_app]$ docker  images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ashucmig            v007                1cba1484fcf7        11 seconds ago      452MB
+centos              centos7             eeb6ee3f44bd        6 months ago        204MB
+
+```
