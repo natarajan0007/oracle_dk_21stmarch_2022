@@ -248,3 +248,17 @@ ashucmig            v007                1cba1484fcf7        11 seconds ago      
 centos              centos7             eeb6ee3f44bd        6 months ago        204MB
 
 ```
+
+### namespaces for container ISOlation 
+
+<img src="ns.png">
+
+### cgroups 
+
+```
+ 369  docker  run -itd --name c3 --memory 100M   alpine ping fb.com 
+  370  docker  stats
+  371 
+  372  docker  run -itd --name c4 --memory 200M --cpu-shares=30   alpine ping fb.com 
+
+```
