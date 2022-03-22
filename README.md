@@ -147,3 +147,71 @@ Deleted: sha256:3c2c5101e22a416a298d34d93c36a0beeb6e8472173866256a9ff66029d0914f
 Removing login credentials for https://index.docker.io/v1/
 ```
 
+### image build for java sample code 
+
+### dockerfile 
+```
+FROM openjdk 
+# official docker image with java support 
+LABEL email=ashutoshh@linux.com
+RUN mkdir /code
+ADD oracle.java /code/
+# copy and ADD both are same but add can take data from URL also 
+WORKDIR  /code/
+# to change directory during build time and also maintain it 
+RUN  javac oracle.java 
+# compiling code 
+CMD ["java","myclass"]
+# default process which is running java code 
+```
+### image build 
+```
+[ashu@docker-engine-new java_app]$ docker build  -t   ashujava:appv1  . 
+Sending build context to Docker daemon  3.072kB
+Step 1/7 : FROM openjdk
+ ---> 1ffbb31e1412
+Step 2/7 : LABEL email=ashutoshh@linux.com
+ ---> Running in c64539b3e852
+Removing intermediate container c64539b3e852
+ ---> 1f0926be2559
+Step 3/7 : RUN mkdir /code
+ ---> Running in 7af3963f4
+```
+
+
+### accessing 
+
+```
+ashu@docker-engine-new java_app]$ docker  exec -it  testashuc1  bash 
+bash-4.4# ls /
+bin  boot  code  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+bash-4.4# cd  /code/
+bash-4.4# ls
+myclass.class  oracle.java
+bash-4.4# cat  oracle.java 
+class myclass { 
+    public static void main(String args[]) 
+    { 
+        // test expression 
+        while (true) { 
+            System.out.println("Hello World !!"); 
+  
+            // update expression 
+        } 
+    } 
+bash-4.4# exit
+exit
+```
+
+### image push to OCR 
+
+```
+304  docker  tag  ashujava:appv2   phx.ocir.io/axmbtg8judkl/javaapps:22ndmarch2022 
+  305  docker  login phx.ocir.io 
+  306  docker push  phx.ocir.io/axmbtg8judkl/javaapps:22ndmarch2022 
+  307  history 
+[ashu@docker-engine-new java_app]$ 
+[ashu@docker-engine-new java_app]$ 
+[ashu@docker-engine-new java_app]$ docker  logout  phx.ocir.io 
+```
+
