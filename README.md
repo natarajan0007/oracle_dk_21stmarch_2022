@@ -160,3 +160,81 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 444c4e71f528        ashuhttpd:v1        "/bin/sh -c 'httpd -…"   19 seconds ago      Up 17 seconds       0.0.0.0:1234->80/tcp   ashwebapp1
 [ashu@docker-engine-new webapp]$ 
 ```
+
+### creating docker network 
+
+<img src="dnet.png">
+
+### create custom brige 
+
+```
+[ashu@docker-engine-new webapp]$ docker  network  ls
+NETWORK ID          NAME                DRIVER              SCOPE
+653848cd21ea        bridge              bridge              local
+79e79a3c217c        host                host                local
+f753c4f2115d        none                null                local
+[ashu@docker-engine-new webapp]$ docker  network  create  ashubr1  
+4acecc8c90280206a4eeed84ee2f64ffc63addb3bf89479c114eeb86fe5feb38
+[ashu@docker-engine-new webapp]$ docker  network  ls
+NETWORK ID          NAME                DRIVER              SCOPE
+4acecc8c9028        ashubr1             bridge              local
+653848cd21ea        bridge              bridge              local
+79e79a3c217c        host                host                local
+f753c4f2115d        none                null                local
+[ashu@docker-engine-new webapp]$ docker  network  inspect   ashubr1  
+[
+    {
+        "Name": "ashubr1",
+        "Id": "4acecc8c90280206a4eeed84ee2f64ffc63addb3bf89479c114eeb86fe5feb38",
+        "Created": "2022-03-23T08:59:16.16302406Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.18.0.0/16",
+                    "Gateway": "172.18.0.1"
+                }
+            ]
+```
+
+### bridge 
+
+```
+ docker  network  create  ashubr2  --subnet  192.168.10.0/24
+```
+
+### more demo
+
+```
+[ashu@docker-engine-new webapp]$ docker  run  -itd  --name ashuc1 --network ashubr1  alpine  
+62e25e8293bcf51af5a0b79fd9be8838d3fa4540ce2fe2250c2fc77ef4bc2c35
+[ashu@docker-engine-new webapp]$ docker  run  -itd  --name ashuc2 --network ashubr1  alpine  
+1f742935fda3e2db9354510b22fe4c60f1694d8977bbb0d4db5b93a0892ab579
+[ashu@docker-engine-new webapp]$ 
+[ashu@docker-engine-new webapp]$ docker  exec -it ashuc1  sh 
+/ # ping  ashuc2
+PING ashuc2 (172.18.0.3): 56 data bytes
+64 bytes from 172.18.0.3: seq=0 ttl=64 time=0.136 ms
+64 bytes from 172.18.0.3: seq=1 ttl=64 time=0.093 ms
+^C
+--- ashuc2 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 0.093/0.114/0.136 ms
+/ # exit
+[ashu@docker-engine-new webapp]$ docker  run  -itd  --name ashuc3 --network ashubr2  alpine  
+c25ccd919d92640c63715fa2b304cd37e56fa98560661173de31478bad36a374
+[ashu@docker-engine-new webapp]$ docker  exec -it ashuc1  sh 
+/ # ping  ashuc3
+ping: bad address 'ashuc3'
+/ # 
+```
+
+### static 
+
+```
+docker  run  -itd  --name ashuc4 --network ashubr2 --ip 192.168.10.200  alpine 
+```
