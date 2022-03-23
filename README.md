@@ -238,3 +238,115 @@ ping: bad address 'ashuc3'
 ```
 docker  run  -itd  --name ashuc4 --network ashubr2 --ip 192.168.10.200  alpine 
 ```
+
+## Storage in Docker 
+
+<img src="st.png">
+
+### Container and volume options 
+
+<img src="volume.png">
+
+### creating volume 
+
+```
+[ashu@docker-engine-new webapp]$ docker  volume  ls
+DRIVER              VOLUME NAME
+local               ashuvol1
+local               suneel1
+[ashu@docker-engine-new webapp]$ docker  volume  ls
+DRIVER              VOLUME NAME
+local               ashuvol1
+local               deevsvol1
+local               marivl
+local               natarajanvol1
+local               pavanvol1
+local               poojavol1
+local               suneel1
+[ashu@docker-engine-new webapp]$ docker  volume inspect  ashuvol1
+[
+    {
+        "CreatedAt": "2022-03-23T11:06:03Z",
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/ashuvol1/_data",
+        "Name": "ashuvol1",
+        "Options": {},
+        "Scope": "local"
+    }
+]
+```
+
+### using volume 
+
+```
+[ashu@docker-engine-new webapp]$ docker  run  -ti --name ashuc1  -v  ashuvol1:/mnt/data    alpine 
+/ # 
+/ # 
+/ # ls  /
+bin    dev    etc    home   lib    media  mnt    opt    proc   root   run    sbin   srv    sys    tmp    usr    var
+/ # cd  /mnt/
+/mnt # ls
+data
+/mnt # cd  data/
+/mnt/data # ls
+/mnt/data # mkdir  hello oracle 
+/mnt/data # ls
+hello   oracle
+/mnt/data # exit
+[ashu@docker-engine-new webapp]$ docker  rm ashuc1 -f 
+ashuc1
+[ashu@docker-engine-new webapp]$ docker run -it --rm  -v  ashuvol1:/check:ro  oraclelinux:8.4  bash 
+[root@e55d81ad34ef /]# 
+[root@e55d81ad34ef /]# 
+[root@e55d81ad34ef /]# cd /check/
+[root@e55d81ad34ef check]# ls
+hello  oracle
+[root@e55d81ad34ef check]# mkdir hii
+mkdir: cannot create directory 'hii': Read-only file system
+[root@e55d81ad34ef check]# exit
+exit
+```
+
+### mysql DB as container 
+
+```
+  501  docker  run -itd --name ashuc3  -v  ashudb:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=oracle098  mysql 
+  502  docker  ps 
+  503  docker  logs -f  ashuc3
+  504  history 
+[ashu@docker-engine-new webapp]$ docker  exec  -it  ashuc3  bash 
+root@1e1e8daf7f0e:/# 
+root@1e1e8daf7f0e:/# mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> create database new:
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':' at line 1
+mysql> create database new;
+Query OK, 1 row affected (0.00 sec)
+
+```
+
