@@ -292,3 +292,33 @@ kubectl  delete pod  ashupod-123
 pod "ashupod-123" deleted
 ```
 
+### auto generate YAML / JSON 
+
+```
+1037  kubectl run  ashupod3  --image=dockerashu/ashuhttpd:v1  --port 80  --dry-run=client  -o yaml
+ 1038  kubectl run  ashupod3  --image=dockerashu/ashuhttpd:v1  --port 80  --dry-run=client  -o json 
+ 1039  history
+ 1040  kubectl run  ashupod3  --image=dockerashu/ashuhttpd:v1  --port 80  --dry-run=client  -o json  >pod3.json 
+ 1041  kubectl run  ashupod3  --image=dockerashu/ashuhttpd:v1  --port 80  --dry-run=client  -o yaml >pod3.yaml
+```
+
+### generate yaml from running pod 
+
+```
+kubectl get po  suneelpod1  -oyaml   >test.yaml 
+fire@ashutoshhs-MacBook-Air k8s_deploy % 
+fire@ashutoshhs-MacBook-Air k8s_deploy % 
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl delete pods suneelpod1 
+pod "suneelpod1" deleted
+
+fire@ashutoshhs-MacBook-Air k8s_deploy % 
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl apply -f  test.yaml 
+pod/suneelpod1 created
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  get  po 
+NAME               READY   STATUS    RESTARTS   AGE
+ashupod1           1/1     Running   0          25m
+deevena-pod1       1/1     Running   0          43m
+deevspod-123       1/1     Running   0          56m
+deevspod-test      1/1     Running   0          14m
+```
+
