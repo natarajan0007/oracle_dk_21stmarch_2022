@@ -193,3 +193,102 @@ fire@ashutoshhs-MacBook-Air Desktop %
 
 
  ```
+ 
+ ## Into POd 
+ 
+ <img src="pod1.png">
+ 
+ ## Deploy pod yaml 
+ 
+ ```
+ fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl apply -f ashupod1.yaml 
+
+
+ ```
+### list pods 
+
+```
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  get  pods         
+NAME               READY   STATUS    RESTARTS      AGE
+ashupod-123        1/1     Running   0             13m
+deevspod-123       1/1     Running   0             12m
+maheshpod-123      1/1     Running   0             12m
+mari-123           1/1     Running   0             11m
+natarajanpod-123   1/1     Running   0             11m
+nithin-pod1        1/1     Running   0             8m10s
+pavanpod-123       1/1     Running   0             12m
+pod1               1/1     Running   4 (16m ago)   6h56m
+poojapod-123       1/1     Running   0             11m
+pragpod-123        1/1     Running   0             2m9s
+suneelpod-123      1/1     Running   0             12m
+venkypod-123       1/1     Running   0             12m
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  get  pods -o wide 
+NAME               READY   STATUS    RESTARTS      AGE     IP                NODE                            NOMINATED NODE   READINESS GATES
+ashupod-123        1/1     Running   0             13m     192.168.93.4      ip-172-31-29-225.ec2.internal   <none>           <none>
+deevspod-123       1/1     Running   0             12m     192.168.93.6      ip-172-31-29-225.ec2.internal   <none>           <none>
+maheshpod-123      1/1     Running   0             12m     192.168.203.196   ip-172-31-85-52.ec2.internal    <none>           <none>
+mari-123           1/1     Running   0             11m     192.168.93.8      ip-172-31-29-225.ec2.internal   <none>           <none>
+natarajanpod-123   1/1     Running   0             11m     192.168.203.195   ip-172-31-85-52.ec2.internal    <none>           <none>
+nithin-pod1        1/1     Running   0             8m13s   192.168.203.194   ip-172-31-85-52.ec2.internal    <none>           <none>
+pavanpod-123       1/1     Running   0    
+
+```
+
+### details about pod 
+
+```
+           13m
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl describe  pod  ashupod-123 
+Name:         ashupod-123
+Namespace:    default
+Priority:     0
+Node:         ip-172-31-29-225.ec2.internal/172.31.29.225
+Start Time:   Thu, 24 Mar 2022 15:40:38 +0530
+Labels:       <none>
+Annotations:  cni.projectcalico.org/containerID: 0abddac70bc760f7a445858a6d98cbe1b28a05fe7ce92dee0a15c4b1278e0ebb
+              cni.projectcalico.org/podIP: 192.168.93.4/32
+              cni.projectcalico.org/podIPs: 192.168.93.4/32
+Status:       Running
+IP:           192.168.93.4
+IPs:
+  IP:  192.168.93.4
+Containers:
+  ashuc1:
+    Container ID:  docker://6cab1b2ff16eedcf5b788c6167e034e757e7e7a53f23608b7f631f0d83c58bba
+    Image:         alpine
+    Image ID:      docker-pullable://alpine@sha256:ceeae2849a425ef1a7e591d8288f1a58cdf1f4e8d9da7510e29ea829e61cf512
+    Port:          <none>
+    Host Port:     <none>
+```
+
+### checking output of container inside pod 
+
+```
+kubectl logs  ashupod-123
+```
+
+### accessing container shell inside pod 
+
+```
+kubectl  exec -it  ashupod-123 -- sh 
+/ # 
+/ # 
+/ # cat /etc/os-release 
+NAME="Alpine Linux"
+ID=alpine
+VERSION_ID=3.15.2
+PRETTY_NAME="Alpine Linux v3.15"
+HOME_URL="https://alpinelinux.org/"
+BUG_REPORT_URL="https://bugs.alpinelinux.org/"
+/ # whoami
+root
+/ # exit
+```
+
+### delete pod 
+
+```
+kubectl  delete pod  ashupod-123
+pod "ashupod-123" deleted
+```
+
