@@ -1,0 +1,7 @@
+version: '3.8' # compose file version  
+services: # is for defining applications 
+ ashuapp1: # name of my app u can choose anything it just for reference 
+  image: alpine
+  container_name: ashuc1
+  command: ping fb.com 
+  restart: always 

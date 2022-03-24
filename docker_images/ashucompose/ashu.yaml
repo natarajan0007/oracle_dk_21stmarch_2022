@@ -1,0 +1,28 @@
+version: '3.8' # compose file version 
+volumes:
+ ashudbvol1: # creating volume 
+services: # is for defining applications 
+ ashuapp4:
+  image: ashusample:v001 # creating new image 
+  build: . # location of dockerfile
+  container_name: ashucc99
+  restart: always 
+ ashuapp3:
+  image: mysql
+  container_name: ashudbc1
+  restart: always
+  environment: # using env variable 
+   MYSQL_ROOT_PASSWORD: "Oracle098"
+  volumes: # mounting volume 
+  - /home/ashu/Desktop/:/var/lib/mysql/ 
+ ashuapp2: 
+  image: nginx
+  container_name: ashuc22
+  ports: # port forwarding here 
+  - "1144:80"
+  restart: always 
+ ashuapp1: # name of my app u can choose anything it just for reference 
+  image: quay.io/libpod/alpine
+  container_name: ashuc1
+  command: ping fb.com 
+  restart: always 
