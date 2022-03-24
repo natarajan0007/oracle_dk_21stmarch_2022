@@ -6,4 +6,4 @@ spec: # application info
  containers:
  - name: ashuc1 # name of container 
    image: alpine # image from docker hub 
-   command: ['sh','-c','ping google.com'] # default process of container 
+   command: ['sh','-c','ping google.com'] # default process of container
