@@ -246,3 +246,70 @@ fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  get svc -o wide
 NAME         TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE   SELECTOR
 ashusvc333   NodePort   10.96.54.42   <none>        80:32740/TCP   11m   app=ashudep
 ```
+
+### task done 
+
+```
+169  kubectl  create  namespace  ashuk8s1 --dry-run=client -o yaml >mytask.yaml
+ 1170  kubectl  run pod111  --image=ubuntu --command sleep 6000  --namespace ashuk8s1 --dry-run=client -o yaml   >>mytask.yaml
+ 1171  kubectl apply -f mytask.yaml
+ 1172  kubectl  get po -n  ashuk8s1
+ 1173  kubectl  create service nodeport  ashutoshhsvc1 --tcp 1234 --namespace=ashuk8s1 --dry-run=client -oyaml  >>mytask.yaml
+ 1174  kubectl apply -f mytask.yaml
+ 1175  kubectl  get  svc -n ashuk8s1
+ 1176  ls
+ 1177  kubectl  get po -n  ashuk8s1
+ 1178  kubectl -n ashuk8s1 cp  logs.txt  pod111:/tmp/
+```
+
+
+### accessing dashboard 
+
+```
+fire@ashutoshhs-MacBook-Air ~ % kubectl  -n kubernetes-dashboard  get deploy 
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+dashboard-metrics-scraper   1/1     1            1           32h
+kubernetes-dashboard        1/1     1            1           32h
+fire@ashutoshhs-MacBook-Air ~ % kubectl  -n kubernetes-dashboard  get  po    
+NAME                                         READY   STATUS    RESTARTS      AGE
+dashboard-metrics-scraper-799d786dbf-2sq54   1/1     Running   1 (21h ago)   32h
+kubernetes-dashboard-546cbc58cd-gbgqv        1/1     Running   1 (21h ago)   32h
+fire@ashutoshhs-MacBook-Air ~ % 
+fire@ashutoshhs-MacBook-Air ~ % 
+fire@ashutoshhs-MacBook-Air ~ % kubectl  -n kubernetes-dashboard  get  svc 
+NAME                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)         AGE
+dashboard-metrics-scraper   ClusterIP   10.100.147.31   <none>        8000/TCP        32h
+kubernetes-dashboard        NodePort    10.104.173.57   <none>        443:31632/TCP   32h
+fire@ashutoshhs-MacBook-Air ~ % 
+
+
+
+```
+
+### getting secret 
+
+```
+% kubectl  -n kubernetes-dashboard  get  secret 
+NAME                               TYPE                                  DATA   AGE
+default-token-7fgx8                kubernetes.io/service-account-token   3      32h
+kubernetes-dashboard-certs         Opaque                                0      32h
+kubernetes-dashboard-csrf          Opaque                                1      32h
+kubernetes-dashboard-key-holder    Opaque                                2      32h
+kubernetes-dashboard-token-hmrrb   kubernetes.io/service-account-token   3      32h
+fire@ashutoshhs-MacBook-Air ~ % kubectl  -n kubernetes-dashboard  describe   secret  kubernetes-dashboard-token-hmrrb 
+Name:         kubernetes-dashboard-token-hmrrb
+Namespace:    kubernetes-dashboard
+Labels:       <none>
+Annotations:  kubernetes.io/service-account.name: kubernetes-dashboard
+              kubernetes.io/service-account.uid: 6699e5f1-e138-4037-97ef-eb078276de2d
+
+Type:  kubernetes.io/service-account-token
+
+Data
+====
+ca.crt:     1099 bytes
+namespace:  20 bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IlhVNnFOWkJGY0hiNnBrTUpNQUFuOEZYZUFXUWxJRFZoZTNKNXUza21JUkkifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC10b2tlbi1obXJyYiIsIm
+```
+
+
