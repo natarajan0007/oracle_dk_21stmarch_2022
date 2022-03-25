@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: ashupod1
+spec: 
+ containers:
+ - name: ashuc2
+   image: nginx
+   ports:
+   - containerPort: 80 
+ - name: ashuc1 
+   image: busybox
+   command: ['sh','-c','ping fb.com']

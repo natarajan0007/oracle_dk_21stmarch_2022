@@ -1,0 +1,12 @@
+apiVersion: v1 # apiversion of master server 
+kind: Pod # under v1 pod is type of resource 
+metadata: # is for info about pod 
+ name: ashupod-123 # name of pod
+ labels: # to define label to pod 
+  x: helloashu 
+  y: helloashu11  
+spec: # application info
+ containers:
+ - name: ashuc1 # name of container 
+   image: alpine # image from docker hub 
+   command: ['sh','-c','ping google.com'] # default process of container

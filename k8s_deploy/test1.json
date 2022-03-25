@@ -1,0 +1,161 @@
+{
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": {
+        "annotations": {
+            "cni.projectcalico.org/containerID": "f118654b718ab8ca0776e2fd2e560ddb017e00493a8735c7de30c46bf6cdd6ac",
+            "cni.projectcalico.org/podIP": "192.168.93.17/32",
+            "cni.projectcalico.org/podIPs": "192.168.93.17/32",
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Pod\",\"metadata\":{\"annotations\":{\"cni.projectcalico.org/containerID\":\"ee7292000b251a9ad0a393787cff0b0a13cb38c1a89811d428ea4d1266cf26e6\",\"cni.projectcalico.org/podIP\":\"192.168.93.14/32\",\"cni.projectcalico.org/podIPs\":\"192.168.93.14/32\"},\"creationTimestamp\":\"2022-03-24T10:50:51Z\",\"name\":\"suneelpod1\",\"namespace\":\"default\",\"resourceVersion\":\"376786\",\"uid\":\"aa708268-738a-4c56-9863-7b2d639e930d\"},\"spec\":{\"containers\":[{\"command\":[\"sh\",\"-c\",\"ping fb.com\"],\"image\":\"busybox\",\"imagePullPolicy\":\"Always\",\"name\":\"suneel11\",\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"volumeMounts\":[{\"mountPath\":\"/var/run/secrets/kubernetes.io/serviceaccount\",\"name\":\"kube-api-access-wkkpv\",\"readOnly\":true}]}],\"dnsPolicy\":\"ClusterFirst\",\"enableServiceLinks\":true,\"nodeName\":\"ip-172-31-29-225.ec2.internal\",\"preemptionPolicy\":\"PreemptLowerPriority\",\"priority\":0,\"restartPolicy\":\"Always\",\"schedulerName\":\"default-scheduler\",\"securityContext\":{},\"serviceAccount\":\"default\",\"serviceAccountName\":\"default\",\"terminationGracePeriodSeconds\":30,\"tolerations\":[{\"effect\":\"NoExecute\",\"key\":\"node.kubernetes.io/not-ready\",\"operator\":\"Exists\",\"tolerationSeconds\":300},{\"effect\":\"NoExecute\",\"key\":\"node.kubernetes.io/unreachable\",\"operator\":\"Exists\",\"tolerationSeconds\":300}],\"volumes\":[{\"name\":\"kube-api-access-wkkpv\",\"projected\":{\"defaultMode\":420,\"sources\":[{\"serviceAccountToken\":{\"expirationSeconds\":3607,\"path\":\"token\"}},{\"configMap\":{\"items\":[{\"key\":\"ca.crt\",\"path\":\"ca.crt\"}],\"name\":\"kube-root-ca.crt\"}},{\"downwardAPI\":{\"items\":[{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"metadata.namespace\"},\"path\":\"namespace\"}]}}]}}]},\"status\":{\"conditions\":[{\"lastProbeTime\":null,\"lastTransitionTime\":\"2022-03-24T10:50:51Z\",\"status\":\"True\",\"type\":\"Initialized\"},{\"lastProbeTime\":null,\"lastTransitionTime\":\"2022-03-24T10:50:53Z\",\"status\":\"True\",\"type\":\"Ready\"},{\"lastProbeTime\":null,\"lastTransitionTime\":\"2022-03-24T10:50:53Z\",\"status\":\"True\",\"type\":\"ContainersReady\"},{\"lastProbeTime\":null,\"lastTransitionTime\":\"2022-03-24T10:50:51Z\",\"status\":\"True\",\"type\":\"PodScheduled\"}],\"containerStatuses\":[{\"containerID\":\"docker://b50592f77edca0b9ae2baac5f5c15568a7e66e9fbff567ea11c861552e7a585c\",\"image\":\"busybox:latest\",\"imageID\":\"docker-pullable://busybox@sha256:caa382c432891547782ce7140fb3b7304613d3b0438834dce1cad68896ab110a\",\"lastState\":{},\"name\":\"suneel11\",\"ready\":true,\"restartCount\":0,\"started\":true,\"state\":{\"running\":{\"startedAt\":\"2022-03-24T10:50:52Z\"}}}],\"hostIP\":\"172.31.29.225\",\"phase\":\"Running\",\"podIP\":\"192.168.93.14\",\"podIPs\":[{\"ip\":\"192.168.93.14\"}],\"qosClass\":\"BestEffort\",\"startTime\":\"2022-03-24T10:50:51Z\"}}\n"
+        },
+        "creationTimestamp": "2022-03-24T11:31:53Z",
+        "name": "suneelpod1",
+        "namespace": "default",
+        "resourceVersion": "380310",
+        "uid": "0d4e6adc-5952-4ec7-99fb-65ba10f6e7d4"
+    },
+    "spec": {
+        "containers": [
+            {
+                "command": [
+                    "sh",
+                    "-c",
+                    "ping fb.com"
+                ],
+                "image": "busybox",
+                "imagePullPolicy": "Always",
+                "name": "suneel11",
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "volumeMounts": [
+                    {
+                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                        "name": "kube-api-access-wkkpv",
+                        "readOnly": true
+                    }
+                ]
+            }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "enableServiceLinks": true,
+        "nodeName": "ip-172-31-29-225.ec2.internal",
+        "preemptionPolicy": "PreemptLowerPriority",
+        "priority": 0,
+        "restartPolicy": "Always",
+        "schedulerName": "default-scheduler",
+        "securityContext": {},
+        "serviceAccount": "default",
+        "serviceAccountName": "default",
+        "terminationGracePeriodSeconds": 30,
+        "tolerations": [
+            {
+                "effect": "NoExecute",
+                "key": "node.kubernetes.io/not-ready",
+                "operator": "Exists",
+                "tolerationSeconds": 300
+            },
+            {
+                "effect": "NoExecute",
+                "key": "node.kubernetes.io/unreachable",
+                "operator": "Exists",
+                "tolerationSeconds": 300
+            }
+        ],
+        "volumes": [
+            {
+                "name": "kube-api-access-wkkpv",
+                "projected": {
+                    "defaultMode": 420,
+                    "sources": [
+                        {
+                            "serviceAccountToken": {
+                                "expirationSeconds": 3607,
+                                "path": "token"
+                            }
+                        },
+                        {
+                            "configMap": {
+                                "items": [
+                                    {
+                                        "key": "ca.crt",
+                                        "path": "ca.crt"
+                                    }
+                                ],
+                                "name": "kube-root-ca.crt"
+                            }
+                        },
+                        {
+                            "downwardAPI": {
+                                "items": [
+                                    {
+                                        "fieldRef": {
+                                            "apiVersion": "v1",
+                                            "fieldPath": "metadata.namespace"
+                                        },
+                                        "path": "namespace"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "status": {
+        "conditions": [
+            {
+                "lastProbeTime": null,
+                "lastTransitionTime": "2022-03-24T11:31:53Z",
+                "status": "True",
+                "type": "Initialized"
+            },
+            {
+                "lastProbeTime": null,
+                "lastTransitionTime": "2022-03-24T11:31:55Z",
+                "status": "True",
+                "type": "Ready"
+            },
+            {
+                "lastProbeTime": null,
+                "lastTransitionTime": "2022-03-24T11:31:55Z",
+                "status": "True",
+                "type": "ContainersReady"
+            },
+            {
+                "lastProbeTime": null,
+                "lastTransitionTime": "2022-03-24T11:31:53Z",
+                "status": "True",
+                "type": "PodScheduled"
+            }
+        ],
+        "containerStatuses": [
+            {
+                "containerID": "docker://baec0a072207abc97493f7f69533c840e476589a80d119b87d1ffc7018842e92",
+                "image": "busybox:latest",
+                "imageID": "docker-pullable://busybox@sha256:caa382c432891547782ce7140fb3b7304613d3b0438834dce1cad68896ab110a",
+                "lastState": {},
+                "name": "suneel11",
+                "ready": true,
+                "restartCount": 0,
+                "started": true,
+                "state": {
+                    "running": {
+                        "startedAt": "2022-03-24T11:31:55Z"
+                    }
+                }
+            }
+        ],
+        "hostIP": "172.31.29.225",
+        "phase": "Running",
+        "podIP": "192.168.93.17",
+        "podIPs": [
+            {
+                "ip": "192.168.93.17"
+            }
+        ],
+        "qosClass": "BestEffort",
+        "startTime": "2022-03-24T11:31:53Z"
+    }
+}
