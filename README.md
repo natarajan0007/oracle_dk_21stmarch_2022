@@ -81,4 +81,87 @@ fire@ashutoshhs-MacBook-Air k8s_deploy %
 
 <img src="cni.png">
 
-p
+## Intro to k8s internal LB using -- 
+
+<img src="svc.png">
+
+## service use label to find Pod 
+
+<img src="lb.png">
+
+### service type 
+
+<img src="stype.png">
+
+## Nodeport service in k8s
+
+<img src="np.png">
+
+## Implement pod and Nodeport service 
+
+### create pod 
+```
+kubectl  run  ashuwebapp  --image=dockerashu/ashuhttpd:v1  --port 80 --dry-run=client -o yaml       >webapp.yaml 
+
+```
+
+### Deploy pod 
+<img src="podlb.png">
+
+### create service 
+
+```
+ kubectl  create  service  
+Create a service using a specified subcommand.
+
+Aliases:
+service, svc
+
+Available Commands:
+  clusterip    Create a ClusterIP service
+  externalname Create an ExternalName service
+  loadbalancer Create a LoadBalancer service
+  nodeport     Create a NodePort service
+```
+
+### 
+
+```
+kubectl  create  service   nodeport  ashusvc1  --tcp  1234:80  --dry-run=client -o yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashusvc1
+  name: ashusvc1
+spec:
+  ports:
+  - name: 1234-80
+    port: 1234
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: ashusvc1
+  type: NodePort
+status:
+  loadBalancer: {}
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  create  service   nodeport  ashusvc1  --tcp  1234:80  --dry-run=client -o yaml >websvc.yaml
+fire@ashutoshhs-MacBook-Air k8s_deploy % 
+```
+### mathching selector 
+
+<img src="selector.png">
+
+### deploy service 
+
+```
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl apply  -f  websvc.yaml 
+service/ashusvc1 created
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  get service 
+NAME       TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+ashusvc1   NodePort   10.110.64.63   <none>        1234:30851/TCP   14s
+fire@ashutoshhs-MacBook-Air k8s_deploy % 
+
+```
+
