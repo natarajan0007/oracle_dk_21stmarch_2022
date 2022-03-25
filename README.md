@@ -165,3 +165,84 @@ fire@ashutoshhs-MacBook-Air k8s_deploy %
 
 ```
 
+### merging pod and service file 
+
+```
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl apply -f  webapp.yaml 
+pod/ashuwebapp created
+service/ashusvc1 created
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl get po
+NAME         READY   STATUS    RESTARTS   AGE
+ashuwebapp   1/1     Running   0          6s
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl get svc
+NAME       TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+ashusvc1   NodePort   10.110.225.66   <none>        1234:32174/TCP   7s
+```
+
+### app deployment using Deployment resource in k8s 
+
+<img src="dep.png">
+
+### creating deployment 
+
+```
+kubectl  create  deployment ashudep  --image=dockerashu/ashuhttpd:v1  --port 80 --dry-run=client        -o yaml >deployfile.yaml
+```
+
+### 
+
+```
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl apply -f deployfile.yaml 
+deployment.apps/ashudep created
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl get deployment 
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+ashudep   1/1     1            1           9s
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl get deploy     
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+ashudep   1/1     1            1           13s
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  get  po 
+NAME                       READY   STATUS    RESTARTS   AGE
+ashudep-5bf687b9bd-bwjzs   1/1     Running   0          27s
+fire@ashutoshhs-MacBook-Air k8s_deploy % 
+```
+### recreation 
+
+```
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  delete pod ashudep-5bf687b9bd-bwjzs
+pod "ashudep-5bf687b9bd-bwjzs" deleted
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  get  po                            
+NAME                       READY   STATUS    RESTARTS   AGE
+ashudep-5bf687b9bd-kmsvx   1/1     Running   0          4s
+```
+
+### creating service by expose 
+
+```
+kubectl  get deploy 
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+ashudep   1/1     1            1           5m55s
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  expose  deployment  ashudep  --type NodePort  --port 80  --name ashusvc333 
+service/ashusvc333 exposed
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  get  svcNAME         TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+ashusvc333   NodePort   10.96.54.42   <none>        80:32740/TCP   108s
+fire@ashutoshhs-MacBook-Air k8s_deploy % 
+
+```
+
+### scaling 
+
+```
+1161  kubectl  scale deploy ashudep  --replicas=3
+ 1162  kubectl  get deploy 
+ 1163  kubectl  get deploy 
+ 1164  kubectl  get  po 
+ 1165  kubectl  get deploy ashudep -o yaml 
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl get  po --show-labels
+NAME                       READY   STATUS    RESTARTS   AGE   LABELS
+ashudep-5bf687b9bd-88h7q   1/1     Running   0          77s   app=ashudep,pod-template-hash=5bf687b9bd
+ashudep-5bf687b9bd-kmsvx   1/1     Running   0          13m   app=ashudep,pod-template-hash=5bf687b9bd
+ashudep-5bf687b9bd-xr52j   1/1     Running   0          77s   app=ashudep,pod-template-hash=5bf687b9bd
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  get svc -o wide
+NAME         TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE   SELECTOR
+ashusvc333   NodePort   10.96.54.42   <none>        80:32740/TCP   11m   app=ashudep
+```
