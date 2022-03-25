@@ -311,5 +311,42 @@ ca.crt:     1099 bytes
 namespace:  20 bytes
 token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IlhVNnFOWkJGY0hiNnBrTUpNQUFuOEZYZUFXUWxJRFZoZTNKNXUza21JUkkifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC10b2tlbi1obXJyYiIsIm
 ```
+### PRivate image deploy 
+
+```
+ kubectl  create deployment  ashudeploy --image=phx.ocir.io/axmbtg8judkl/webapp:v1  --port 80         --dry-run=client -o yaml >private.yaml 
+fire@ashutoshhs-MacBook-Air k8s_deploy % ls
+ashupod1.yaml   deployfile.yaml mytask.yaml     pod3.yaml       task.yaml       test1.json      websvc.yaml
+ashuwebapp.yaml logs.txt        pod3.json       private.yaml    test.yaml       webapp.yaml
+fire@ashutoshhs-MacBook-Air k8s_deploy % 
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl apply -f private.yaml 
+deployment.apps/ashudeploy created
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  get deploy 
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+ashudep      3/3     3            3           105m
+ashudeploy   1/1     1            1           6s
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl replace -f  private.yaml --force 
+deployment.apps "ashudeploy" deleted
+deployment.apps/ashudeploy replaced
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl get deploy 
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+ashudep      3/3     3            3           107m
+ashudeploy   0/1     1            0           7s
+fire@ashutoshhs-MacBook-Air k8s_deploy % kubectl  get po 
+NAME                          READY   STATUS         RESTARTS   AGE
+ashudep-5bf687b9bd-88h7q      1/1     Running        0          91m
+ashudep-5bf687b9bd-kmsvx      1/1     Running        0          103m
+ashudep-5bf687b9bd-xr52j      1/1     Running        0          91m
+ashudeploy-77895dd7c6-qdvpf   0/1     ErrImagePull   0          14s
+```
+
+### image secret in k8s 
+
+```
+199  kubectl  create  secret   docker-registry   ashusec1 --docker-server=phx.ocir.io  --docker-username="axmbtg8judkl/learntechbyme@gmail.com"  --docker-password="WO-fFuGBCzH;Wbx+_-_6"
+ 1200  history
+ 1201  kubectl  get secret 
+ 
+```
 
 
