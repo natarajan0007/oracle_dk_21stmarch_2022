@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: ashuk8s1
+spec: {}
+status: {}
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: pod111
+  name: pod111
+  namespace: ashuk8s1
+spec:
+  containers:
+  - command:
+    - sleep
+    - "6000"
+    image: ubuntu
+    name: pod111
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashutoshhsvc1
+  name: ashutoshhsvc1
+  namespace: ashuk8s1
+spec:
+  ports:
+  - name: "1234"
+    port: 1234
+    protocol: TCP
+    targetPort: 1234
+    nodePort: 31009
+  selector:
+    app: ashutoshhsvc1
+  type: NodePort
+status:
+  loadBalancer: {}

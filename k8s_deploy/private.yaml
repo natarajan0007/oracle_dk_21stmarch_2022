@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashudeploy
+  name: ashudeploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashudeploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashudeploy
+    spec:
+      imagePullSecrets: # to call image secret 
+      - name: ashusec1 # name of secret 
+      containers:
+      - image: phx.ocir.io/axmbtg8judkl/webapp:v1
+        name: webapp
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}
